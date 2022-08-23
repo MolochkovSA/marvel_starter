@@ -26,7 +26,9 @@ const RandomChar = () => {
   const updateChar = () => {
     clearError()
     const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000)
-    getCharacter(id).then(onCharLoaded)
+    getCharacter(id)
+      .then(onCharLoaded)
+      .catch((e) => console.log(e.message))
   }
 
   const errorMessage = error ? <ErrorMessage /> : null
