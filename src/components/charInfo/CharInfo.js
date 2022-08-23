@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+
 import PropTypes from 'prop-types'
 import Spinner from '../spinner/Spinner'
 import useMarvelService from '../../services/MarvelService'
@@ -25,7 +27,9 @@ const CharInfo = (props) => {
       return
     }
     clearError()
-    getCharacter(charId).then(onCharLoaded)
+    getCharacter(charId)
+      .then(onCharLoaded)
+      .catch((e) => console.log(e.message))
   }
 
   const skeleton = char || loading || error ? null : <Skeleton />
@@ -76,7 +80,13 @@ const View = ({ char }) => {
           }
           return (
             <li className="char__comics-item" key={i}>
-              {item.name}
+              <Link
+                to={`/comics/${item.resourceURI.substring(
+                  item.resourceURI.lastIndexOf('/') + 1
+                )}`}
+              >
+                {item.name}
+              </Link>
             </li>
           )
         })}
